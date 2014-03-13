@@ -1,3 +1,4 @@
+
 function unittest_UniformDistribution
 % UNITTEST_UNIFORMDISTRIBUTION Test the UNIFORMDISTRIBUTION function.
 %   Aidin Nojavan
@@ -19,8 +20,8 @@ assert_equals( U.a, 2, 'Initialization a' );
 assert_equals( U.b, 4, 'Initialization b' );
 
 U=UniformDistribution(-1);
-assert_equals( U.a, -1, 'Initialization a' );
-assert_equals( U.b, 1, 'Initialization b' );
+assert_equals( U.a, -1, 'Initialization default a' );
+assert_equals( U.b, 1, 'Initialization default b' );
 
 U=UniformDistribution();
 assert_equals( U.a, 0, 'Initialization a' );
@@ -48,51 +49,40 @@ F=cdf( U,x1);
 F2=pdf_integrate( pdf( U,x2 ), F, x1);
 assert_equals( F, F2, 'pdf_cdf_match', struct('abstol',0.01) );
 
-% default arguments
-x = linspace(-1.1, 2.3);
-U=UniformDistribution(0,1);
-assert_equals( uniform_pdf(x), pdf(U,x), 'pdf_def12' );
-U=UniformDistribution(-0.2,1);
-assert_equals( uniform_pdf(x,-0.2), pdf(U,x), 'pdf_def2' );
+%% uniform_invcdf
+y = linspace(0, 1);
 
-% 
-% %% uniform_invcdf
-% munit_set_function( 'uniform_invcdf' );
-% 
-% y = linspace(0, 1);
-% 
-% params = {};
-% x = linspace(0, 1);
-% assert_equals( uniform_cdf(uniform_invcdf(y, params{:}), params{:}), y, 'cdf_invcdf_1');
-% assert_equals( uniform_invcdf(uniform_cdf(x, params{:}), params{:}), x, 'invcdf_cdf_1');
-% assert_equals( isnan(uniform_invcdf([-0.1, 1.1], params{:})), [true, true], 'invcdf_nan1');
-% 
-% params = {0.5};
-% x = linspace(0.5, 1);
-% assert_equals( uniform_cdf(uniform_invcdf(y, params{:}), params{:}), y, 'cdf_invcdf_2');
-% assert_equals( uniform_invcdf(uniform_cdf(x, params{:}), params{:}), x, 'invcdf_cdf_2');
-% assert_equals( isnan(uniform_invcdf([-0.1, 1.1], params{:})), [true, true], 'invcdf_nan2');
-% 
-% params = {-2, 3};
-% x = linspace(-2, 3);
-% assert_equals( uniform_cdf(uniform_invcdf(y, params{:}), params{:}), y, 'cdf_invcdf_3');
-% assert_equals( uniform_invcdf(uniform_cdf(x, params{:}), params{:}), x, 'invcdf_cdf_3');
-% assert_equals( isnan(uniform_invcdf([-0.1, 1.1], params{:})), [true, true], 'invcdf_nan3');
-% 
-% 
-% %% uniform_stdnor
-% munit_set_function( 'uniform_stdnor' );
+U=UniformDistribution();
+x = linspace(0, 1);
+assert_equals( cdf(U,invcdf(U,y)), y, 'cdf_invcdf_1');
+assert_equals( invcdf(U,cdf(U,x)), x, 'invcdf_cdf_1');
+assert_equals( isnan(invcdf(U,[-0.1, 1.1])), [true, true], 'invcdf_nan1');
+
+U=UniformDistribution(0.5);
+x = linspace(0.5, 1);
+assert_equals(cdf(U,invcdf(U,y)), y, 'cdf_invcdf_2');
+assert_equals(invcdf(U,cdf(U,x)), x, 'invcdf_cdf_2');
+assert_equals( isnan(invcdf(U,[-0.1, 1.1])), [true, true], 'invcdf_nan2');
+
+U=UniformDistribution(-2,3);
+x = linspace(-2, 3);
+assert_equals(cdf(U,invcdf(U,y)), y, 'cdf_invcdf_3');
+assert_equals( invcdf(U,cdf(U,x)), x, 'invcdf_cdf_3');
+assert_equals( isnan(invcdf(U,[-0.1, 1.1])), [true, true], 'invcdf_nan3');
+
+
+%% uniform_stdnor
 % N=50;
 % uni=linspace(0,1,N+2)';
 % uni=uni(2:end-1);
 % gam=sqrt(2)*erfinv(2*uni-1);
 % 
-% params={0.2,1.3};
-% x=uniform_stdnor( gam, params{:} );
-% assert_equals( uniform_cdf(x, params{:}), uni, 'uniform' )
-% assert_equals( uniform_stdnor(gam), uniform_stdnor(gam, 0, 1), 'uniform_def12');
-% assert_equals( uniform_stdnor(gam, 0), uniform_stdnor(gam, 0, 1), 'uniform_def2');
-% 
+% U=UniformDistribution(0.2,1.3);
+% x=stdnor(U,gam );
+% assert_equals(cdf(U,x), uni, 'uniform' )
+% assert_equals(stdnor(gam), stdnor(gam, 0, 1), 'uniform_def12');
+% assert_equals(stdnor(gam, 0),stdnor(gam, 0, 1), 'uniform_def2');
+
 % %% uniform_raw_moments
 % munit_set_function( 'uniform_raw_moments' );
 % 

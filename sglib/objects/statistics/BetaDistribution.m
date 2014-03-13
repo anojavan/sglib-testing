@@ -1,8 +1,34 @@
 classdef BetaDistribution < Distribution
-    properties 
-        % The parameter A of the Beta(A,b) distribution
+    % BETADISTRIBUTION Construct a BetaDistribution.
+    %   OBJ=BETADISTRIBUTION(A,B) constructs an object returned in
+    %   OBJ representing a Beta distribution with parameters A and B.
+    %
+    % Example (<a href="matlab:run_example BetaDistribution">run</a>)
+    %   dist = BetaDistribution(2,3);
+    %   [var,mean,skew,kurt]=dist.moments()
+    %
+    % See also
+    
+    %   Aidin Nojavan
+    %   Copyright 2014, Inst. of Scientific Computing, TU Braunschweig
+    %
+    %   This program is free software: you can redistribute it and/or modify it
+    %   under the terms of the GNU General Public License as published by the
+    %   Free Software Foundation, either version 3 of the License, or (at your
+    %   option) any later version.
+    %   See the GNU General Public License for more details. You should have
+    %   received a copy of the GNU General Public License along with this
+    %   program.  If not, see <http://www.gnu.org/licenses/>.
+    
+    properties
+        % The parameter A of the Beta(A,b) distribution. A is a positive
+        %   shape parameter, that appears as exponent of the random
+        %   variable and controls the shape of the distribution
         a
-        % The parameter B of the Beta(a,B) distribution
+        
+        % The parameter B of the Beta(a,B) distribution.  B is a positive
+        %   shape parameter, that appears as exponent of the random
+        %   variable and controls the shape of the distribution
         b
     end
     methods
@@ -15,19 +41,19 @@ classdef BetaDistribution < Distribution
         end
         
         function y=pdf(obj,x)
-            % PDF Compute the probability distribution function of the Beta distribution.
+            % PDF Computes the probability distribution function of the Beta distribution.
             y=beta_pdf( x, obj.a, obj.b );
         end
         function y=cdf(obj,x)
-            % CDF Compute the cumulative distribution function of the Beta distribution.
+            % CDF Computes the cumulative distribution function of the Beta distribution.
             y=beta_cdf( x, obj.a, obj.b );
         end
         function x=invcdf(obj,y)
-            % INVCDF Compute the inverse CDF (or quantile) function of the Beta distribution.
+            % INVCDF Computes the inverse CDF (or quantile) function of the Beta distribution.
             x=beta_invcdf( y, obj.a, obj.b );
         end
         function [var,mean,skew,kurt]=moments(obj)
-            % MOMENTS Compute the moments of the Beta distribution.
+            % MOMENTS Computes the moments of the Beta distribution.
             [var,mean,skew,kurt]=beta_moments( obj.a, obj.b );
         end
         function y=stdnor(dist, x)

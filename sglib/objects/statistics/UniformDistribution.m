@@ -1,31 +1,46 @@
 classdef UniformDistribution < Distribution
-% UNIFORMDISTRIBUTION Short description of UniformDistribution.
-%   UNIFORMDISTRIBUTION Long description of UniformDistribution.
+    % UNIFORMDISTRIBUTION Constructs a UniformDistribution.
+    %   OBJ=UNIFORMDISTRIBUTION(A,B) constructs an object
+    %   returned in OBJ representing a Uniform distribution with
+    %   parameters A and B.
+    %
+    % Example (<a href="matlab:run_example UniformDistribution">run</a>)
+    %   dist = LogNormalDistribution(2,3);
+    %   [var,mean,skew,kurt]=dist.moments()
+    %
 
-%   Aidin Nojavan
-%   Copyright 2014, Inst. of Scientific Computing, TU Braunschweig
-%
-%   This program is free software: you can redistribute it and/or modify it
-%   under the terms of the GNU General Public License as published by the
-%   Free Software Foundation, either version 3 of the License, or (at your
-%   option) any later version. 
-%   See the GNU General Public License for more details. You should have
-%   received a copy of the GNU General Public License along with this
-%   program.  If not, see <http://www.gnu.org/licenses/>.
-    properties 
-        % a & b are the parameters of the Uniform Distribution
+    %   Aidin Nojavan
+    %   Copyright 2014, Inst. of Scientific Computing, TU Braunschweig
+    %
+    %   This program is free software: you can redistribute it and/or modify it
+    %   under the terms of the GNU General Public License as published by the
+    %   Free Software Foundation, either version 3 of the License, or (at your
+    %   option) any later version.
+    %   See the GNU General Public License for more details. You should have
+    %   received a copy of the GNU General Public License along with this
+    %   program.  If not, see <http://www.gnu.org/licenses/>.
+    
+    properties
+        % The parameter A of the Uniform(A,b) distribution.
         a
+        % The parameter B of the Uniform(a,B) distribution.
         b
     end
     methods
         function obj=UniformDistribution(a,b)
+            % UNIFORMDISTRIBUTION Constructs a UniformDistribution.
+            %   OBJ=UNIFORMDISTRIBUTION(A,B) constructs an object
+            %   returned in OBJ representing a Uniform distribution with
+            %   parameters A and B.
+            
+            % Default parameters
             if nargin<1
                 a=0;
             end
             if nargin<2
                 b=1;
             end
-               
+            
             obj.a=a;
             obj.b=b;
         end
