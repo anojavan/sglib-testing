@@ -1,6 +1,11 @@
 function unittest_BetaDistribution
 % UNITTEST_BETADISTRIBUTION Test the BETADISTRIBUTION function.
 %
+% Example (<a href="matlab:run_example unittest_BetaDistribution">run</a>)
+%   unittest_BetaDistribution
+%
+% See also
+
 %   Aidin Nojavan
 %   Copyright 2014, Inst. of Scientific Computing, TU Braunschweig
 %
@@ -13,7 +18,8 @@ function unittest_BetaDistribution
 %   program.  If not, see <http://www.gnu.org/licenses/>.
 
 munit_set_function( 'BetaDistribution' );
-%%Initialization
+
+%% Initialization
 B = BetaDistribution(2,3);
 assert_equals( B.a, 2, 'Initialization a' );
 assert_equals( B.b, 3, 'Initialization b' );

@@ -19,7 +19,7 @@ function unittest_NormalDistribution
 
 munit_set_function( 'NormalDistribution' );
 
-%%Initialization
+%% Initialization
 N=NormalDistribution(2,3);
 assert_equals( N.mu, 2, 'Initialization default mu' );
 assert_equals( N.sigma,3, 'Initialization default sigma' );

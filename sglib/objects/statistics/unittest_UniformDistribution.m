@@ -1,6 +1,8 @@
 
 function unittest_UniformDistribution
 % UNITTEST_UNIFORMDISTRIBUTION Test the UNIFORMDISTRIBUTION function.
+
+
 %   Aidin Nojavan
 %   Copyright 2014, Inst. of Scientific Computing, TU Braunschweig
 %
@@ -72,16 +74,17 @@ assert_equals( isnan(invcdf(U,[-0.1, 1.1])), [true, true], 'invcdf_nan3');
 
 
 %% uniform_stdnor
-% N=50;
-% uni=linspace(0,1,N+2)';
-% uni=uni(2:end-1);
-% gam=sqrt(2)*erfinv(2*uni-1);
-% 
-% U=UniformDistribution(0.2,1.3);
-% x=stdnor(U,gam );
-% assert_equals(cdf(U,x), uni, 'uniform' )
-% assert_equals(stdnor(gam), stdnor(gam, 0, 1), 'uniform_def12');
-% assert_equals(stdnor(gam, 0),stdnor(gam, 0, 1), 'uniform_def2');
+N=50;
+uni=linspace(0,1,N+2)';
+uni=uni(2:end-1);
+gam=sqrt(2)*erfinv(2*uni-1);
+
+U=UniformDistribution(0.2,1.3);
+x=stdnor(U,gam );
+assert_equals(cdf(U,x), uni, 'uniform' )
+U=UniformDistribution(0,1);
+assert_equals(uniform_stdnor(gam), stdnor(U,gam), 'uniform_def12');
+assert_equals(uniform_stdnor(gam, 0),stdnor(U,gam), 'uniform_def2');
 
 % %% uniform_raw_moments
 % munit_set_function( 'uniform_raw_moments' );

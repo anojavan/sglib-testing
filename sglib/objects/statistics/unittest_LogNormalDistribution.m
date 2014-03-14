@@ -19,7 +19,7 @@ function unittest_LogNormalDistribution
 
 munit_set_function( 'LogNormalDistribution' );
 
-%%Initialization
+%% Initialization
 LN=LogNormalDistribution(2,3);
 assert_equals( LN.mu, 2, 'Initialization default a' );
 assert_equals( LN.sigma,3, 'Initialization default b' );

@@ -1,6 +1,8 @@
 function unittest_ExponentialDistribution
 % UNITTEST_EXPONENTIALDISTRIBUTION Test the EXPONENTIALDISTRIBUTION function.
 %
+% Example (<a href="matlab:run_example unittest_ExponentialDistribution">run</a>)
+%   unittest_ExponentialDistribution
 %
 % See also EXPONENTIALDISTRIBUTION, MUNIT_RUN_TESTSUITE
 
