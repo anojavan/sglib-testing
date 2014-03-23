@@ -8,7 +8,7 @@ classdef LogNormalDistribution < Distribution
     %   dist = LogNormalDistribution(2,3);
     %   [var,mean,skew,kurt]=dist.moments()
     %
-    % See also
+    % See also DISTRIBUTION NORMALDISTRIBUTION BEA_PDF
     
     %   Aidin Nojavan
     %   Copyright 2014, Inst. of Scientific Computing, TU Braunschweig

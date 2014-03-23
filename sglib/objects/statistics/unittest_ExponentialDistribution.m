@@ -6,8 +6,8 @@ function unittest_ExponentialDistribution
 %
 % See also EXPONENTIALDISTRIBUTION, MUNIT_RUN_TESTSUITE
 
-%   <author>
-%   Copyright 2014, <institution>
+%   <Aidin Nojavan>
+%   Copyright 2014, <Inst. of Scientific Computing, TU Braunschweig>
 %
 %   This program is free software: you can redistribute it and/or modify it
 %   under the terms of the GNU General Public License as published by the
@@ -31,12 +31,6 @@ assert_equals(pdf(E,-inf), 0, 'pdf_minf' );
 assert_equals(pdf(E,-1e10), 0, 'pdf_negative' );
 assert_equals(pdf(E,inf), 0, 'pdf_inf' );
 
-% pdf matches cdf
-% [x1,x2]=linspace_mp( -0.1, 5 );
-% F=cdf(E,x1 );
-% F2=pdf_integrate(pdf(E,x2 ), F, x1);
-% assert_equals( F, F2, 'pdf_cdf_match', struct('abstol',0.01) );
-
 %% exponential_invcdf
 y = linspace(0, 1);
 E = ExponentialDistribution(2);
@@ -59,14 +53,4 @@ gam=sqrt(2)*erfinv(2*uni-1);
 E = ExponentialDistribution(0.7);
 x=stdnor( E,gam );
 assert_equals(cdf(E,x), uni, 'exponential' )
-
-
-%% exponential_raw_moments
-
-% expected=[1., 0.7692307692307692, 1.1834319526627217, 2.7309968138370504, 8.403067119498616, 32.31948892114852];
-% assert_equals( expected, exponential_raw_moments( 0:5, 1.3 ), 'lam1.3' );
-%
-% expected=[750;5;375000];
-% assert_equals( expected, exponential_raw_moments( [3;1;5], 0.2 ), 'lam0.2T' );
-%
 

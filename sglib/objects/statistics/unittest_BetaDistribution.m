@@ -4,7 +4,7 @@ function unittest_BetaDistribution
 % Example (<a href="matlab:run_example unittest_BetaDistribution">run</a>)
 %   unittest_BetaDistribution
 %
-% See also
+% See also BETADISTRIBUTION, MUNIT_RUN_TESTSUITE
 
 %   Aidin Nojavan
 %   Copyright 2014, Inst. of Scientific Computing, TU Braunschweig
@@ -49,14 +49,6 @@ assert_equals( pdf(B,inf), 0, 'pdf_inf' );
 B = BetaDistribution(0.2,0.5);
 assert_equals(pdf(B,0), 0, 'pdf_zero' );
 assert_equals(pdf(B,1), 0, 'pdf_zero' );
-
-% % pdf matches cdf
-% B = BetaDistribution(2,3);
-% [x,x2]=linspace_mp(-0.1,1.1);
-% F=beta_cdf(x,a,b);
-% F2=pdf_integrate( beta_pdf(x2,a,b), F, x);
-% assert_equals( F, F2, 'pdf_cdf_match', struct('abstol',0.01) );
-
 
 %% beta_invcdf
 

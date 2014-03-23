@@ -6,8 +6,8 @@ function unittest_LogNormalDistribution
 %
 % See also LOGNORMALDISTRIBUTION, MUNIT_RUN_TESTSUITE 
 
-%   <author>
-%   Copyright 2014, <institution>
+%   <Aidin Nojavan>
+%   Copyright 2014, <Inst. of Scientific Computing, TU Braunschweig>
 %
 %   This program is free software: you can redistribute it and/or modify it
 %   under the terms of the GNU General Public License as published by the
@@ -39,30 +39,10 @@ assert_equals(cdf(LN,-1e8), 0, 'cdf_negative' );
 assert_equals(cdf(LN,inf), 1, 'cdf_inf' );
 assert_equals(cdf(LN,exp(LN.mu)), 1/2, 'cdf_median' );
 
-% default arguments
-% x = linspace(-0.5, 4.3);
-% assert_equals( lognormal_cdf(x), lognormal_cdf(x,0,1), 'cdf_def12' );
-% assert_equals( lognormal_cdf(x,-0.2), lognormal_cdf(x,-0.2,1), 'cdf_def2' );
-
-
 % lognormal_pdf
 assert_equals(pdf(LN,-inf), 0, 'pdf_minf' );
 assert_equals(pdf(LN,-1e8), 0, 'pdf_negative' );
 assert_equals(pdf(LN,inf), 0, 'pdf_inf' );
-
-% pdf matches cdf
-% [x1,x2]=linspace_mp(0,exp(mu+5*sig));
-% F=cdf(LN,x1);
-% F2=pdf_integrate(pdf(LN,x2), F, x1);
-% assert_equals( F, F2, 'pdf_cdf_match', struct('abstol',0.01) );
-
-% default arguments
-% LN=LogNormalDistribution();
-% x = linspace(-0.5, 4.3);
-% assert_equals(pdf(x),pdf(LN,x), 'pdf_def12' );
-% LN=LogNormalDistribution(-0.2,1);
-% assert_equals(pdf(x,-0.2), pdf(x,-0.2,1), 'pdf_def2' );
-
 
 % lognormal_invcdf
 y = linspace(0, 1);
@@ -83,7 +63,6 @@ assert_equals(cdf(LN,invcdf(LN,y)),cdf(LN,invcdf(LN,y)),'cdf_invcdf_3');
 assert_equals(invcdf(LN,cdf(LN,x)), x, 'invcdf_cdf_3');
 assert_equals( isnan(invcdf(LN,[-0.1, 1.1])), [true, true], 'invcdf_nan3');
 
-
 % % lognormal_stdnor
 N=50;
 uni=linspace(0,1,N+2)';
@@ -95,27 +74,4 @@ x=stdnor( LN,gam );
 assert_equals(cdf(LN,x), uni, 'lognormal' )
 assert_equals( lognormal_stdnor(gam), lognormal_stdnor(gam, 0, 1), 'lognormal_def12');
 assert_equals( lognormal_stdnor(gam, 0), lognormal_stdnor(gam, 0, 1), 'lognormal_def2');
-
-
-% lognormal_raw_moments
-
-% some precomputed moments
-expected=[ 1., 1.6487212707001282, 7.38905609893065, 90.01713130052181, ...
-    2980.9579870417283, 268337.2865208745, 6.565996913733051e7, ...
-    4.3673179097646416e10, 7.896296018268069e13, 3.8808469624362035e17, ...
-    5.184705528587072e21];
-LN=LogNormalDistribution(0,1);
-% assert_equals( expected, lognormal_raw_moments(LN,0:10 ), 'mu0sig1' );
-
-
-expected=[1.0, 3.472934799336826, 13.197138159658358, ...
-    54.871824399070078, 249.63503718969369, 1242.6481670549958];
-LN=LogNormalDistribution(1.2,0.3);
-% assert_equals( expected(1+[3,1,5])', lognormal_raw_moments(LN,[3;1;5]), 'mu12sig03' );
-
-% 
-% test default arguments
-% assert_equals( lognormal_raw_moments(0:5), lognormal_raw_moments(0:5, 0, 1), 'def_12');
-% assert_equals( lognormal_raw_moments(0:5, -0.2), lognormal_raw_moments(0:5, -0.2, 1), 'def_2');
-% 
 

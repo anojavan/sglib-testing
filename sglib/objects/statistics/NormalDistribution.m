@@ -5,9 +5,10 @@ classdef NormalDistribution < Distribution
     %   parameters MU and SIGMA.
     %
     % Example (<a href="matlab:run_example NormalDistribution">run</a>)
-    %   dist = LogNormalDistribution(2,3);
+    %   dist = NormalDistribution(2,3);
     %   [var,mean,skew,kurt]=dist.moments()
-    %    
+    %  
+    % See also DISTRIBUTION LOGNORMALDISTRIBUTION BETA_CDF
     
     %   Aidin Nojavan
     %   Copyright 2014, Inst. of Scientific Computing, TU Braunschweig

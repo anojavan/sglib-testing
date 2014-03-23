@@ -6,8 +6,8 @@ function unittest_NormalDistribution
 %
 % See also NORMALDISTRIBUTION, MUNIT_RUN_TESTSUITE 
 
-%   <author>
-%   Copyright 2014, <institution>
+%   <Aidin Nojavan>
+%   Copyright 2014, <Inst. of Scientific Computing, TU Braunschweig>
 %
 %   This program is free software: you can redistribute it and/or modify it
 %   under the terms of the GNU General Public License as published by the
@@ -37,28 +37,10 @@ assert_equals(cdf(N,-inf), 0, 'cdf_minf' );
 assert_equals(cdf(N,inf), 1, 'cdf_inf' );
 assert_equals(cdf(N,N.mu), 1/2, 'cdf_median' );
 
-% default arguments
-% x = linspace(-0.5, 4.3);
-% assert_equals( normal_cdf(x), normal_cdf(x,0,1), 'cdf_def12' );
-% assert_equals( normal_cdf(x,0.2), normal_cdf(x,0.2,1), 'cdf_def2' );
-
-
 %% normal_pdf
 N=NormalDistribution(1,2);
 assert_equals( pdf(N,-inf), 0, 'pdf_minf' );
 assert_equals(pdf(N,inf), 0, 'pdf_inf' );
-
-% % pdf matches cdf
-% [x1,x2]=linspace_mp(mu-5*sig,mu+5*sig);
-% F=normal_cdf(x1, mu, sig);
-% F2=pdf_integrate( normal_pdf(x2,mu,sig), F, x1);
-% assert_equals( F, F2, 'pdf_cdf_match', struct('abstol',0.01) );
-% 
-% % default arguments
-% x = linspace(-0.5, 4.3);
-% assert_equals( normal_pdf(x), normal_pdf(x,0,1), 'pdf_def12' );
-% assert_equals( normal_pdf(x,0.2), normal_pdf(x,0.2,1), 'pdf_def2' );
-
 
 %% normal_invcdf
 
@@ -92,18 +74,4 @@ assert_equals( cdf(N,x), uni, 'normal' )
 N=NormalDistribution(0,1);
 assert_equals( normal_stdnor(gam), stdnor(N,gam), 'normal_def12');
 assert_equals( normal_stdnor(gam, 0),stdnor(N,gam), 'normal_def2');
-
-%% normal_raw_moments
-
-% % some precomputed moments
-% expected=[1, 0, 1, 0, 3, 0, 15, 0, 105, 0, 945];
-% assert_equals( expected, normal_raw_moments( 0:10, 0, 1 ), 'mu0sig1' );
-% 
-% expected=[1.022, 0.2, 8.70382];
-% assert_equals( expected, normal_raw_moments( [3;1;5], 0.2, 1.3 ), 'lam0.2T' );
-
-% % test default arguments
-% assert_equals( normal_raw_moments(0:5), normal_raw_moments(0:5, 0, 1), 'def_12');
-% assert_equals( normal_raw_moments(0:5, 0.4), normal_raw_moments(0:5, 0.4, 1), 'def_2');
-
 

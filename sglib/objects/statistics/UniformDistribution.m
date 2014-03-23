@@ -8,6 +8,7 @@ classdef UniformDistribution < Distribution
     %   dist = LogNormalDistribution(2,3);
     %   [var,mean,skew,kurt]=dist.moments()
     %
+    % See also DISTRIBUTION NORMALDISTRIBUTION BETA_PDF
 
     %   Aidin Nojavan
     %   Copyright 2014, Inst. of Scientific Computing, TU Braunschweig

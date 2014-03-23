@@ -6,7 +6,7 @@ classdef ExponentialDistribution < Distribution
     %
     % Example (<a href="matlab:run_example ExponentialDistribution">run</a>)
     %   dist = ExponentialDistribution(2);
-    %   [var,mean,skew,kurt]=dist.moments()
+    %[var,mean,skew,kurt]=dist.moments()
     %
     % See also DISTRIBUTION LOGNORMALDISTRIBUTION BETA_CDF
     
