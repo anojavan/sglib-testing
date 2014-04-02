@@ -87,43 +87,50 @@ classdef TranslatedDistribution < Distribution
             end
         end
         
-        function [shift,scale] = fix_bounds(obj,min, max,varargin)
-            % reads the user option or return the default in varargin.
-            % If DIST is an unbounded distribution the options 'q0' and or 
-            % 'q1' can be set. Then the Q0 quantile of the new distribution 
-            % will be MIN and the Q1 quantile will be MAX (see Example 2). 
-            % If these options are not set, they default to 0 and 1, which 
-            % means the bounds of the distribution.
-            options=varargin2options(varargin);
-            [q0,options]=get_option(options,'q0',0);
-            [q1,options]=get_option(options,'q1',1);
-            check_unsupported_options(options,mfilename);
+        function obj=fix_moments(obj,mean,var)
+            [old_mean, old_var]=moments( obj );
             
-            % check bounds for the lower and upper quantiles (q0 and q1)
-            check_range(q0, 0, 1, 'q0', mfilename);
-            check_range(q1, q0, 1, 'q1', mfilename);
+            obj.shift=mean-old_mean+ obj.shift;
+            obj.scale=sqrt(var/old_var)* obj.scale;;
+        end
             
-            % get the x values corresponding to the quantiles
-            old_min=invcdf( q0, obj.dist );
-            old_max=invcdf( q1, obj.dist );
-            
-            % check that the min and max are finite (i.e. either it was a
-            %  bounded distribution or quantiles are different from 0 or 1)
-            if ~isfinite(old_min)
-                error('sglib:statistics', 'Lower quantile (q0) gives infinity (unbounded distribution?)');
+            function obj = fix_bounds(obj,min, max,varargin)
+                % reads the user option or return the default in varargin.
+                % If DIST is an unbounded distribution the options 'q0' and or
+                % 'q1' can be set. Then the Q0 quantile of the new distribution
+                % will be MIN and the Q1 quantile will be MAX (see Example 2).
+                % If these options are not set, they default to 0 and 1, which
+                % means the bounds of the distribution.
+                options=varargin2options(varargin);
+                [q0,options]=get_option(options,'q0',0);
+                [q1,options]=get_option(options,'q1',1);
+                check_unsupported_options(options,mfilename);
+                
+                % check bounds for the lower and upper quantiles (q0 and q1)
+                check_range(q0, 0, 1, 'q0', mfilename);
+                check_range(q1, q0, 1, 'q1', mfilename);
+                
+                % get the x values corresponding to the quantiles
+                old_min=invcdf( obj.dist,q0 );
+                old_max=invcdf( obj.dist,q1 );
+                
+                % check that the min and max are finite (i.e. either it was a
+                %  bounded distribution or quantiles are different from 0 or 1)
+                if ~isfinite(old_min)
+                    error('sglib:statistics', 'Lower quantile (q0) gives infinity (unbounded distribution?)');
+                end
+                if ~isfinite(old_max)
+                    error('sglib:statistics', 'Upper quantile (q1) gives infinity (unbounded distribution?)');
+                end
+                
+                % Get the new scale and shift factors (just a linear mapping,
+                % only the shift is a bit tricky since the mean needs to be
+                % taken into account. BTW: it doesn't make a difference whether
+                % the min or the max is used for the shift calculation)
+                %             mean = obj.mean;
+                obj.scale = (max-min) / (old_max-old_min);
+                obj.shift = min - ((old_min-obj.mean-obj.shift)*obj.scale + obj.mean+obj.shift);
             end
-            if ~isfinite(old_max)
-                error('sglib:statistics', 'Upper quantile (q1) gives infinity (unbounded distribution?)');
-            end
-            
-            % Get the new scale and shift factors (just a linear mapping,
-            % only the shift is a bit tricky since the mean needs to be
-            % taken into account. BTW: it doesn't make a difference whether
-            % the min or the max is used for the shift calculation)
-            mean = obj.dist.mean;
-            scale = (max-min) / (old_max-old_min);
-            shift = min - ((old_min-mean-old_shift)*scale + mean+old_shift);
         end
     end
-end
-
+    
