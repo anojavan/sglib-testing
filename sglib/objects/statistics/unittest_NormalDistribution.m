@@ -31,6 +31,9 @@ assert_equals( N.sigma, 1, 'Initialization default sigma' );
 N=NormalDistribution();
 assert_equals( N.mu, 0, 'Initialization default mu' );
 assert_equals( N.sigma, 1, 'Initialization default sigma' );
+%% Mean & Var
+assert_equals(N.mean, 0, 'mean');
+assert_equals(N.var, 1, 'var' );
 %% normal_cdf
 N=NormalDistribution(1,2);
 assert_equals(cdf(N,-inf), 0, 'cdf_minf' );
@@ -74,4 +77,18 @@ assert_equals( cdf(N,x), uni, 'normal' )
 N=NormalDistribution(0,1);
 assert_equals( normal_stdnor(gam), stdnor(N,gam), 'normal_def12');
 assert_equals( normal_stdnor(gam, 0),stdnor(N,gam), 'normal_def2');
-
+%% translate
+N=NormalDistribution(2,3);
+%T=TranslatedDistribution(N,2,3);
+tN=N.translate(2,3);
+[m,v]=tN.moments();
+%[m2,v2]=T.moments();
+assert_equals( m, 4, 'translated mean');
+assert_equals( v, 81, 'translated var');
+assert_equals(tN.pdf(0),0.0401582,'translated pdf');
+assert_equals(tN.pdf(inf),0,'translated pdf');
+%T.pdf(0);
+assert_equals(tN.cdf(0),0.328360,'translated cdf','abstol',0.0001);
+assert_equals(tN.cdf(inf),1,'translated cdf');
+assert_equals(tN.cdf(-inf),0,'translated cdf');
+assert_equals(tN.invcdf(0),-inf,'translated cdf');

@@ -28,7 +28,9 @@ assert_equals( U.b, 1, 'Initialization default b' );
 U=UniformDistribution();
 assert_equals( U.a, 0, 'Initialization a' );
 assert_equals( U.b, 1, 'Initialization b' );
-
+%% Mean & Var
+assert_equals(U.mean, 0.5, 'mean');
+assert_equals(U.var, 0.08333333, 'var' );
 
 %% uniform_cdf
 U=UniformDistribution(2,4);
@@ -85,32 +87,21 @@ assert_equals(cdf(U,x), uni, 'uniform' )
 U=UniformDistribution(0,1);
 assert_equals(uniform_stdnor(gam), stdnor(U,gam), 'uniform_def12');
 assert_equals(uniform_stdnor(gam, 0),stdnor(U,gam), 'uniform_def2');
-
-% %% uniform_raw_moments
-% munit_set_function( 'uniform_raw_moments' );
-% 
-% % some precomputed moments
-% expected=[ 1.0, 0.5, 0.33333333333333331, 0.25, 0.20000000000000001, ...
-%     0.16666666666666666, 0.14285714285714285, 0.125, 0.1111111111111111, ...
-%     0.10000000000000001, 0.090909090909090912];
-% assert_equals( expected, uniform_raw_moments( 0:10, 0, 1 ), 'a0b1' );
-% 
-%   
-% expected=[ 1.0, 2.6000000000000001, 7.1633333333333331, ...
-%     20.722000000000001, 62.349620000000009, 193.5102866666667];
-% assert_equals( expected(1+[3,1,5])', uniform_raw_moments( [3;1;5], 1.5, 3.7 ), 'a15b37' );
-% 
-% expected=[ 1, 2, 4, 8, 16];
-% assert_equals( expected, uniform_raw_moments( 0:4, 2, 2 ), 'a2b2' );
-% 
-% % limit case for a==b
-% assert_equals( uniform_raw_moments(0:5, 3, 3), 3.^(0:5), 'limit_a_eq_b');
-% 
-% % test default arguments
-% assert_equals( uniform_raw_moments(0:5), uniform_raw_moments(0:5, 0, 1), 'def_12');
-% assert_equals( uniform_raw_moments(0:5, 0.3), uniform_raw_moments(0:5, 0.3, 1), 'def_2');
-% 
-
+%% translate
+U=UniformDistribution(2,3);
+%T=TranslatedDistribution(U,2,3);
+tU=U.translate(2,3);
+[m,v]=tU.moments();
+%[m2,v2]=T.moments();
+assert_equals( m, 4.5, 'translated mean');
+assert_equals( v, 0.75, 'translated var');
+assert_equals(tU.pdf(0),0,'translated pdf');
+assert_equals(tU.pdf(inf),0,'translated pdf');
+%T.pdf(0);
+assert_equals(tU.cdf(0),0,'translated cdf','abstol',0.0001);
+assert_equals(tU.cdf(inf),1,'translated cdf');
+assert_equals(tU.cdf(-inf),0,'translated cdf');
+assert_equals(tU.invcdf(0),3,'translated cdf');
 
 function F2=pdf_integrate( f, F, x )
 F2=cumsum([F(1), f])*(x(2)-x(1));

@@ -24,6 +24,9 @@ B = BetaDistribution(2,3);
 assert_equals( B.a, 2, 'Initialization a' );
 assert_equals( B.b, 3, 'Initialization b' );
 
+%% Mean & Var
+assert_equals( B.mean, 0.4, 'mean' );
+assert_equals( B.var, 0.04, 'var' );
 %% beta_cdf
 assert_equals(cdf(B,-inf),0, 'cdf_minf' );
 assert_equals(cdf(B,-1e8), 0, 'cdf_zero' );

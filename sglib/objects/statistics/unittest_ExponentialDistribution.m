@@ -18,8 +18,11 @@ function unittest_ExponentialDistribution
 %   program.  If not, see <http://www.gnu.org/licenses/>.
 
 munit_set_function( 'ExponentialDistribution' );
-%% exponential_cdf
+%% Mean & Var
 E = ExponentialDistribution(1.5);
+assert_equals(E.mean, 0.6666666, 'mean','abstol',0.0001 );
+assert_equals(E.var, 0.44444444, 'var' );
+%% exponential_cdf
 assert_equals(cdf(E,-inf), 0, 'cdf_minf' );
 assert_equals(cdf(E,-1e10), 0, 'cdf_negative' );
 assert_equals(cdf(E,inf), 1, 'cdf_inf' );

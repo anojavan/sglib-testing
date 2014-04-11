@@ -1,7 +1,7 @@
 classdef LogNormalDistribution < Distribution
     % LOGNORMALDISTRIBUTION Construct a LogNormalDistribution.
-    %   OBJ=LOGNORMALDISTRIBUTION(MU,SIGMA) constructs an object
-    %   returned in OBJ representing a LogNormal distribution with
+    %   DIST=LOGNORMALDISTRIBUTION(MU,SIGMA) constructs a distribution
+    %   returned in DIST representing a LogNormal distribution with
     %   parameters MU and SIGMA.
     %
     % Example (<a href="matlab:run_example LogNormalDistribution">run</a>)
@@ -13,29 +13,29 @@ classdef LogNormalDistribution < Distribution
     %   Aidin Nojavan
     %   Copyright 2014, Inst. of Scientific Computing, TU Braunschweig
     %
-    %   This program is free software: you can redistribute it and/or modify it
-    %   under the terms of the GNU General Public License as published by the
-    %   Free Software Foundation, either version 3 of the License, or (at your
-    %   option) any later version.
-    %   See the GNU General Public License for more details. You should have
-    %   received a copy of the GNU General Public License along with this
-    %   program.  If not, see <http://www.gnu.org/licenses/>.
+    %   This program is free software: you can redistribute it and/or
+    %   modify it under the terms of the GNU General Public License as
+    %   published by the Free Software Foundation, either version 3 of the
+    %   License, or (at your option) any later version.
+    %   See the GNU General Public License for more details. You should
+    %   have received a copy of the GNU General Public License along with
+    %   this program.  If not, see <http://www.gnu.org/licenses/>.
     
     properties
         % The parameter MU of the LogNormal(MU,sigma) distribution. MU is
-        %   the location parameter.
+        % the location parameter.
         mu
         
         % The parameter SIGMA of the LogNormal(mu,SIGMA) distribution.
-        %   SIGMA is the scale parameter.
+        % SIGMA is the scale parameter.
         sigma
     end
     methods
-        function obj=LogNormalDistribution(mu,sigma)
+        function dist=LogNormalDistribution(mu,sigma)
             % LOGNORMALDISTRIBUTION Construct a LogNormalDistribution.
-            %   OBJ=LOGNORMALDISTRIBUTION(MU,SIGMA) constructs an object
-            %   returned in OBJ representing a LogNormal distribution with
-            %   parameters MU and SIGMA.
+            % DIST=LOGNORMALDISTRIBUTION(MU,SIGMA) constructs a distribution
+            % returned in DIST representing a LogNormal distribution with
+            % parameters MU and SIGMA.
             
             
             % Default parameters
@@ -46,32 +46,42 @@ classdef LogNormalDistribution < Distribution
                 sigma=1;
             end
             
-            obj.mu=mu;
-            obj.sigma=sigma;
+            dist.mu=mu;
+            dist.sigma=sigma;
         end
-        
-        function y=pdf(obj,x)
-            % PDF Computes the probability distribution function of the LogNormal distribution.
-            y=lognormal_pdf( x, obj.mu, obj.sigma );
+        function m=mean(dist)
+            % MEAN computes the mean value of the lognormal distribution.
+            m=mean@Distribution(dist);
         end
-        function y=cdf(obj,x)
-            % CDF Computes the cumulative distribution function of the LogNormal distribution.
-            y=lognormal_cdf( x, obj.mu, obj.sigma );
+        function v=var(dist)
+            % VAR computes the variance of the lognormal distribution.
+            v=var@Distribution(dist);
         end
-        function x=invcdf(obj,y)
-            % INVCDF Computes the inverse CDF (or quantile) function of the LogNormal distribution.
-            x=lognormal_invcdf( y, obj.mu, obj.sigma );
+        function y=pdf(dist,x)
+            % PDF computes the probability distribution function of the
+            % LogNormal distribution.
+            y=lognormal_pdf( x, dist.mu, dist.sigma );
         end
-        function [var,mean,skew,kurt]=moments(obj)
-            % MOMENTS Computes the moments of the LogNormal distribution.
-            [var,mean,skew,kurt]=lognormal_moments( obj.sigma, obj.sigma );
+        function y=cdf(dist,x)
+            % CDF computes the cumulative distribution function of the
+            % LogNormal distribution.
+            y=lognormal_cdf( x, dist.mu, dist.sigma );
+        end
+        function x=invcdf(dist,y)
+            % INVCDF computes the inverse CDF (or quantile) function of the
+            % LogNormal distribution.
+            x=lognormal_invcdf( y, dist.mu, dist.sigma );
+        end
+        function [var,mean,skew,kurt]=moments(dist)
+            % MOMENTS computes the moments of the LogNormal distribution.
+            [var,mean,skew,kurt]=lognormal_moments( dist.sigma,dist.sigma);
         end
         function y=stdnor(dist, x)
             % STDNOR Map normal distributed random values.
-            %   Y=STDNOR(DIST, X) Map normal distributed random values X to random
-            %   values Y distribution according to the probability distribution DIST.
+            % Y=STDNOR(DIST, X) Map normal distributed random values X to
+            % random values Y distribution according to the probability
+            % distribution DIST.
             y=dist.invcdf( normal_cdf( x ) );
         end
-        
     end
 end
