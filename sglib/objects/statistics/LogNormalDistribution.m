@@ -76,12 +76,5 @@ classdef LogNormalDistribution < Distribution
             % MOMENTS computes the moments of the LogNormal distribution.
             [var,mean,skew,kurt]=lognormal_moments( dist.sigma,dist.sigma);
         end
-        function y=stdnor(dist, x)
-            % STDNOR Map normal distributed random values.
-            % Y=STDNOR(DIST, X) Map normal distributed random values X to
-            % random values Y distribution according to the probability
-            % distribution DIST.
-            y=dist.invcdf( normal_cdf( x ) );
-        end
     end
 end
