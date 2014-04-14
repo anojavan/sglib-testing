@@ -5,25 +5,36 @@ classdef Distribution % < handle
     methods (Abstract)
         y=pdf(dist, x); % PDF Compute the probability distribution function.
         y=cdf(dist, x); % CDF Compute the cumulative distribution function.
-        x=invcdf(dist, y); % INVCDF Compute the inverse CDF (or quantile) function.
+        x=invcdf(dist, y); % INVCDF Compute the inverse CDF function.
         y=moments(dist); % MOMENTS Compute the moments of the distribution.
     end
     methods
         function mean=mean(dist)
+            % MEAN computes the mean value of the distribution.
             mean=moments(dist);
         end
         function var=var(dist)
-            m=cell(1,2);
-            [m{:}]=dist.moments();
-            var=m{2};
+            % VAR computes the variance of the distribution
+            [m,v]=dist.moments();
+            var=v;
         end
-        function dist=fix_moments(dist,mean,var)
+        function tdist=translate(dist,shift,scale)
+            % TRANSLATE translates the distribution DIST
+            % TDIST=TRANSLATE(DIST,SHIFT,SCALE) translates the distribution 
+            % DIST in regard to parameters SHIFT and SCALE
+            tdist=TranslatedDistribution(dist,shift,scale);
+        end
+        function [shift,scale]=fix_moments(dist,mean,var)
+            % FIX_MOMENTS Generates a new dist with specified moments.
+            % NEW_DIST=FIX_MOMENTS(DIST, MEAN, VAR) computes from the
+            % distribution DIST a new shifted and scaled distribution
+            % NEW_DIST such that the mean and variance of NEW_DIST are
+            % given by MEAN and VAR.
             [old_mean, old_var]=moments( dist );
-            
-            dist.shift=mean-old_mean+ dist.shift;
-            dist.scale=sqrt(var/old_var)* dist.scale;
+            shift=mean-old_mean;
+            scale=sqrt(var/old_var);
         end
-        function tdist = fix_bounds(tdist,min, max,varargin)
+        function [shift,scale] = fix_bounds(tdist,min, max,center,varargin)
             % reads the user option or return the default in varargin.
             % If DIST is an unbounded distribution the options 'q0' and or
             % 'q1' can be set. Then the Q0 quantile of the new distribution
@@ -55,20 +66,15 @@ classdef Distribution % < handle
             % Get the new scale and shift factors (just a linear mapping,
             % only the shift is a bit tricky since the mean needs to be
             % taken into account. BTW: it doesn't make a difference whether
-            % the min or the max is used for the shift calculation)
-            %             mean = tdist.mean;
-            old_shift=tdist.shift;
-            old_scale=tdist.scale;
-            tdist.scale = ((max-min) / (old_max-old_min));
-            tdist.shift = min - ((old_min-tdist.center-tdist.shift)*tdist.scale + tdist.center+tdist.shift);
-            
-            tdist.shift=tdist.shift+old_shift;
-            tdist.scale=tdist.scale*old_scale;
+            % the min or the max is used for the shift calculation)          
+            scale = ((max-min) / (old_max-old_min));
+            shift = min - ((old_min-center)*scale + center);
         end
         function y=stdnor(dist, x)
             % STDNOR Map normal distributed random values.
-            %   Y=STDNOR(DIST, X) Map normal distributed random values X to random
-            %   values Y distribution according to the probability distribution DIST.
+            % Y=STDNOR(DIST, X) Map normal distributed random values X to 
+            % random values Y distribution according to the probability 
+            % distribution DIST.
             y=dist.invcdf( normal_cdf( x ) );
         end
     end

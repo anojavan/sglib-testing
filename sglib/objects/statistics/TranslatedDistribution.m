@@ -20,18 +20,22 @@ classdef TranslatedDistribution < Distribution
     
     
     properties
-        % The parameter DIST of the TRANSLATEDDISTRIBUTION(DIST,shift,scale,CENTER).
+        % The parameter DIST of the 
+        % TRANSLATEDDISTRIBUTION(DIST,shift,scale,CENTER). 
         % DIST is the original distribution.
         dist;
-        % The parameter SHIFT of the TRANSLATEDDISTRIBUTION(dist,SHIFT,scale,CENTER).
+        % The parameter SHIFT of the 
+        % TRANSLATEDDISTRIBUTION(dist,SHIFT,scale,CENTER).
         % SHIFT will shift the distribution to right or left.
         shift;
-        % The parameter SCALE of the TRANSLATEDDISTRIBUTION(dist,shift,SCALE,CENTER).
-        % Scale the whole distribution by the factor SCALE. Note that scaling
-        % is done around the mean of the distribution and thus the mean is not
+        % The parameter SCALE of the 
+        % TRANSLATEDDISTRIBUTION(dist,shift,SCALE,CENTER). Scale the whole
+        % distribution by the factor SCALE. Note that scaling is done 
+        % aroundthe mean of the distribution and thus the mean is not
         % affected by scaling.
         scale;
-        % The parameter CENTER of the TRANSLATEDDISTRIBUTION(dist,shift,scale,CENTER).
+        % The parameter CENTER of the 
+        % TRANSLATEDDISTRIBUTION(dist,shift,scale,CENTER).
         % The CENTER refers to mean of the originial distribution.
         center;
     end
@@ -43,7 +47,6 @@ classdef TranslatedDistribution < Distribution
             tdist.dist = dist;
             tdist.shift = shift;
             tdist.scale = scale;
-            %             tdist.center = center; %tdist.dist.moments();
             if nargin<4
                 tdist.center=tdist.dist.moments();
             else
@@ -54,7 +57,7 @@ classdef TranslatedDistribution < Distribution
         function y=pdf(tdist,x)
             % Y=PDF(TDIST,X) computes the pdf of translated distribution of
             % original distribution, defined as a parameter of TDIST and
-            %values X
+            % values X
             x=(x-tdist.shift-tdist.center)/tdist.scale+tdist.center;
             % computes the translated X values in regard to parameters
             % shift, center and scale
@@ -64,7 +67,7 @@ classdef TranslatedDistribution < Distribution
         function y=cdf(tdist,x)
             % Y=CDF(TDIST,X) computes the cdf of translated distribution of
             % original distribution, defined as a parameter of TDIST and
-            %values X
+            % values X
             x=(x-tdist.shift-tdist.center)/tdist.scale+tdist.center;
             % computes the translated X values in regard to parameters
             % shift, center and scale
@@ -77,15 +80,8 @@ classdef TranslatedDistribution < Distribution
             x=tdist.dist.invcdf(y);
             x=(x-tdist.center)*tdist.scale+tdist.center+tdist.shift;
         end
-        function m=mean(tdist)
-            % MEAN computes the mean value of the translated distribution.
-            m=mean@Distribution(tdist);
-        end
-        function v=var(tdist)
-            % VAR computes the variance of the translated distribution.
-            v=var@Distribution(tdist);
-        end
         function [mean,var,skew,kurt]=moments(tdist)
+            % MOMENTS compute the moments of the translated distribution.
             n=max(nargout,1);
             m=cell(1,n);
             [m{:}]=tdist.dist.moments();
@@ -101,19 +97,28 @@ classdef TranslatedDistribution < Distribution
             end
         end
         
-        function dist=fix_moments(tdist,mean,var)
-            
-            dist=fix_moments@Distribution(tdist,mean,var);
+        function new_dist=fix_moments(tdist,mean,var)
+            % FIX_MOMENTS changes TDIST with specified moments.
+            % TDIST=FIX_MOMENTS(TDIST, MEAN, VAR) computes from the
+            % distribution TDIST a new shifted and scaled distribution
+            % TDIST such that the mean and variance of NEW_DIST are
+            % given by MEAN and VAR.
+            [shift,scale]=fix_moments@Distribution(tdist,mean,var);
+            %             tdist.shift=shift;
+            %             tdist.scale=scale;
+            new_dist=translate(tdist,shift,scale);
         end
         
         function tdist = fix_bounds(tdist,min, max,varargin)
             % reads the user option or return the default in varargin.
             % If DIST is an unbounded distribution the options 'q0' and or
             % 'q1' can be set. Then the Q0 quantile of the new distribution
-            % will be MIN and the Q1 quantile will be MAX (see Example 2).
+            % will be MIN and the Q1 quantile will be MAX.
             % If these options are not set, they default to 0 and 1, which
             % means the bounds of the distribution.
-            tdist=fix_bounds@Distribution(tdist,min,max,varargin);
+            [shift,scale]=fix_bounds@Distribution(tdist,min,max,tdist.center,varargin);
+            tdist.shift=shift+(tdist.shift*scale);
+            tdist.scale= tdist.scale*scale;
         end
     end
 end
