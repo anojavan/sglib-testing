@@ -57,3 +57,14 @@ E = ExponentialDistribution(0.7);
 x=stdnor( E,gam );
 assert_equals(cdf(E,x), uni, 'exponential' )
 
+%% fix_moments
+E=ExponentialDistribution(4);
+dist=fix_moments(E,5,7);
+[m,v]=moments(dist);
+assert_equals(m,5,'mean fix_moments');
+assert_equals(v,7,'var fix_moments');
+%% Fix Bounds
+E = ExponentialDistribution(4);
+dist = fix_bounds(E,2,4,'q0',0.001,'q1', 0.5);
+assert_equals(invcdf(dist,0.001), 2, 'fix_bounds-nor_min');
+assert_equals(invcdf(dist,0.5), 4, 'fix_bounds-nor_max');

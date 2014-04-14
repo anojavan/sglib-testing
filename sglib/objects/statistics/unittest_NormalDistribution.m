@@ -92,3 +92,15 @@ assert_equals(tN.cdf(0),0.328360,'translated cdf','abstol',0.0001);
 assert_equals(tN.cdf(inf),1,'translated cdf');
 assert_equals(tN.cdf(-inf),0,'translated cdf');
 assert_equals(tN.invcdf(0),-inf,'translated cdf');
+%% Fix Moments
+% can test directly for the normal and uniform distributions
+N = NormalDistribution(2,5);
+dist=fix_moments(N,7,13);
+[m,v]=moments(dist);
+assert_equals(m,7,'mean fix_moments');
+assert_equals(v,13,'var fix_moments');
+%% Fix Bounds
+N = NormalDistribution(2,3);
+dist = fix_bounds(N,2,4,'q0',0.001,'q1', 0.5);
+assert_equals(invcdf(dist,0.001), 2, 'fix_bounds-nor_min');
+assert_equals(invcdf(dist,0.5), 4, 'fix_bounds-nor_max');

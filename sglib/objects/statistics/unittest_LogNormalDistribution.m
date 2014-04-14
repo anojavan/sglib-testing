@@ -6,7 +6,7 @@ function unittest_LogNormalDistribution
 %
 % See also LOGNORMALDISTRIBUTION, MUNIT_RUN_TESTSUITE 
 
-%   <Aidin Nojavan>
+%   Aidin Nojavan
 %   Copyright 2014, <Inst. of Scientific Computing, TU Braunschweig>
 %
 %   This program is free software: you can redistribute it and/or modify it
@@ -77,4 +77,15 @@ x=stdnor( LN,gam );
 assert_equals(cdf(LN,x), uni, 'lognormal' )
 assert_equals( lognormal_stdnor(gam), lognormal_stdnor(gam, 0, 1), 'lognormal_def12');
 assert_equals( lognormal_stdnor(gam, 0), lognormal_stdnor(gam, 0, 1), 'lognormal_def2');
+%% fix_moments
+LN=LogNormalDistribution(2,3);
+dist=fix_moments(LN,4,14);
+[m,v]=moments(dist);
+assert_equals(m,4,'mean fix_moments');
+assert_equals(v,14,'var fix_moments');
 
+%% Fix Bounds
+LN = LogNormalDistribution(2,3);
+dist = fix_bounds(LN,2,4,'q0',0.001,'q1', 0.5);
+assert_equals(invcdf(dist,0.001), 2, 'fix_bounds-nor_min');
+assert_equals(invcdf(dist,0.5), 4, 'fix_bounds-nor_max');

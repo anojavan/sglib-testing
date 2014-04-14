@@ -103,5 +103,17 @@ assert_equals(tU.cdf(inf),1,'translated cdf');
 assert_equals(tU.cdf(-inf),0,'translated cdf');
 assert_equals(tU.invcdf(0),3,'translated cdf');
 
+%% fix_moments
+U = UniformDistribution(22,88);
+dist=fix_moments(U, 50, 3 );
+[m,v]=moments(dist);
+assert_equals(m, 50, 'mean fix_moments');
+assert_equals(v, 3, 'uvar fix_moments');
+%% Fix Bounds
+U = UniformDistribution(2,3);
+dist = fix_bounds(U,2,4);
+assert_equals(invcdf(dist,0), 2, 'fix_bounds-uni_min');
+assert_equals(invcdf(dist,1), 4, 'fix_bounds-uni_max');
+
 function F2=pdf_integrate( f, F, x )
 F2=cumsum([F(1), f])*(x(2)-x(1));

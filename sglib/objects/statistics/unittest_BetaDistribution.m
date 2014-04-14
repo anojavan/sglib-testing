@@ -83,5 +83,14 @@ x=beta_stdnor(gam, 0.5, 1.3);
 
 B = BetaDistribution(0.5,1.3);
 assert_equals( cdf(B,x), uni, 'beta' );
-
-
+%% fix_moments
+B=BetaDistribution(2,3);
+dist=fix_moments(B,3,14);
+[m,v]=moments(dist);
+assert_equals(m,3,'mean fix_moments');
+assert_equals(v,14,'var fix_moments');
+%% Fix Bounds
+B = BetaDistribution(2,3);
+dist = fix_bounds(B,4,5);
+assert_equals(invcdf(dist,0), 4, 'fix_bounds-uni_min');
+assert_equals(invcdf(dist,1), 5, 'fix_bounds-uni_max');
