@@ -36,8 +36,7 @@ classdef LogNormalDistribution < Distribution
             % DIST=LOGNORMALDISTRIBUTION(MU,SIGMA) constructs a distribution
             % returned in DIST representing a LogNormal distribution with
             % parameters MU and SIGMA.
-            
-            
+              
             % Default parameters
             if nargin<1
                 mu=0;
