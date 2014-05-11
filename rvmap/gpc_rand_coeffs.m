@@ -1,12 +1,9 @@
 function x_i_alpha = gpc_rand_coeffs(V_x, Nx, varargin)
-% GPC_RAND_COEFFS Short description of gpc_rand_coeffs.
-%   GPC_RAND_COEFFS Long description of gpc_rand_coeffs.
-%
-% Options
-%
-% References
-%
-% Notes
+% GPC_RAND_COEFFS Create some random coefficients for a GPC for testing purposes.
+%   X_I_ALPHA = GPC_RAND_COEFFS(V_X, NX) creates GPC coefficients for
+%   testing purposes. X_I_ALPHA will contain NX time "size of V_X"
+%   coefficients. The coefficients will be computed randomly but with some
+%   exponentially decaying factor.
 %
 % Example (<a href="matlab:run_example gpc_rand_coeffs">run</a>)
 %
@@ -23,8 +20,22 @@ function x_i_alpha = gpc_rand_coeffs(V_x, Nx, varargin)
 %   received a copy of the GNU General Public License along with this
 %   program.  If not, see <http://www.gnu.org/licenses/>.
 
+options=varargin2options(varargin,mfilename);
+[zero_mean,options]=get_option(options, 'zero_mean', false);
+[order_decay,options]=get_option(options, 'order_decay', 0.1);
+check_unsupported_options(options);
+
 I_x=V_x{2};
 
 Mx = gpcbasis_size(V_x, 1);
-x_i_alpha = rand(Nx, Mx)+0.2;
-x_i_alpha = binfun(@times, x_i_alpha, 10.^(-multiindex_order(I_x)'));
+x_i_alpha = zeros(Nx, Mx);
+if zero_mean
+    min_order = 1;
+else
+    min_order = 0;
+end
+ind = multiindex_order(I_x)>=min_order;
+Mi = sum(ind);
+
+x_i_alpha(:,ind) = rand(Nx, Mi)+0.2;
+x_i_alpha = binfun(@times, x_i_alpha, order_decay.^(multiindex_order(I_x)'));

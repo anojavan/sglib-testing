@@ -69,8 +69,10 @@ addpath( fullfile( basepath, 'fem', 'simplefem') );
 addpath( fullfile( basepath, 'fem', 'pdetool') );
 addpath( fullfile( basepath, 'util', 'paramstudy') )
 
+addpath( fullfile( basepath, 'objects') );
 addpath( fullfile( basepath, 'objects', 'operators') );
 addpath( fullfile( basepath, 'objects', 'statistics') );
+addpath( fullfile( basepath, 'objects', 'bases') );
 
 if exist( fullfile( basepath, 'contrib'), 'dir' )
   addpath( fullfile( basepath, 'contrib') )

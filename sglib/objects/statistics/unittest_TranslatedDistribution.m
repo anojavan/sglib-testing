@@ -135,4 +135,12 @@ N = NormalDistribution(2,3);
 T = TranslatedDistribution(N,0,1,2);
 dist = fix_bounds(T,2,4,'q0',0.001,'q1', 0.5);
 assert_equals(invcdf(dist,0.001), 2, 'fix_bounds-nor_min');
+<<<<<<< HEAD
 assert_equals(invcdf(dist,0.5), 4, 'fix_bounds-nor_max');
+=======
+assert_equals(invcdf(dist,0.5), 4, 'fix_bounds-nor_max');
+
+%%
+% TODO: add unittest for variance of TranslatedDistribution if center is
+% not the same as mean
+>>>>>>> sglib-ezander/master
