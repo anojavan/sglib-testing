@@ -42,16 +42,7 @@ classdef Distribution % < handle
             % will be MIN and the Q1 quantile will be MAX (see Example 2).
             % If these options are not set, they default to 0 and 1, which
             % means the bounds of the distribution.
-            
-<<<<<<< HEAD
-            str=strcmp(class(dist), 'TranslatedDistribution');
-            if str==1
-                center=dist.center;
-            else
-                center=moments(dist);
-            end
-=======
->>>>>>> sglib-ezander/master
+
             options=varargin2options(varargin);
             [q0,options]=get_option(options,'q0',0);
             [q1,options]=get_option(options,'q1',1);
@@ -78,22 +69,7 @@ classdef Distribution % < handle
             % only the shift is a bit tricky since the mean needs to be
             % taken into account. BTW: it doesn't make a difference whether
             % the min or the max is used for the shift calculation)
-<<<<<<< HEAD
-            scale = ((max-min) / (old_max-old_min));
-            shift = min - ((old_min-center)*scale + center);
-            if str==1
-                shift=shift+(dist.shift*scale);
-                scale= dist.scale*scale;
-                new_dist=translate(dist.dist,shift,scale);
-            else
-                new_dist=translate(dist,shift,scale);
-            end
-=======
-            center = mean(dist);
-            scale  = ((max-min) / (old_max-old_min));
-            shift  = min - ((old_min-center)*scale + center);
-            new_dist=translate(dist,shift,scale);
->>>>>>> sglib-ezander/master
+
         end
         function y=stdnor(dist, x)
             % STDNOR Map normal distributed random values.

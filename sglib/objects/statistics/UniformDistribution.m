@@ -73,5 +73,8 @@ classdef UniformDistribution < Distribution
             dist.a=m+shift-v;
             dist.b=m+shift+v;
         end
+        function display(dist)
+            str = fprintf('UniformDistribution (%d, %d)\n', dist.a, dist.b);
+        end
     end
 end

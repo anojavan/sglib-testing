@@ -36,12 +36,8 @@ classdef LogNormalDistribution < Distribution
             % DIST=LOGNORMALDISTRIBUTION(MU,SIGMA) constructs a distribution
             % returned in DIST representing a LogNormal distribution with
             % parameters MU and SIGMA.
-<<<<<<< HEAD
-              
-=======
             
             
->>>>>>> sglib-ezander/master
             % Default parameters
             if nargin<1
                 mu=0;
@@ -53,17 +49,7 @@ classdef LogNormalDistribution < Distribution
             dist.mu=mu;
             dist.sigma=sigma;
         end
-<<<<<<< HEAD
-        function m=mean(dist)
-            % MEAN computes the mean value of the lognormal distribution.
-            m=mean@Distribution(dist);
-        end
-        function v=var(dist)
-            % VAR computes the variance of the lognormal distribution.
-            v=var@Distribution(dist);
-        end
-=======
->>>>>>> sglib-ezander/master
+        
         function y=pdf(dist,x)
             % PDF computes the probability distribution function of the
             % LogNormal distribution.
@@ -82,6 +68,10 @@ classdef LogNormalDistribution < Distribution
         function [var,mean,skew,kurt]=moments(dist)
             % MOMENTS computes the moments of the LogNormal distribution.
             [var,mean,skew,kurt]=lognormal_moments( dist.sigma,dist.sigma);
+        end
+        
+        function display(dist)
+            str = fprintf('LogNormalDistribution(%d, %d)\n', dist.mu, dist.sigma);
         end
     end
 end
