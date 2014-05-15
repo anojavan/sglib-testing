@@ -58,5 +58,11 @@ classdef BetaDistribution < Distribution
             % MOMENTS computes the moments of the beta distribution.
             [mean,var,skew,kurt]=beta_moments( dist.a, dist.b );
         end
+
+%         function disp(dist)
+%             str = sprintf('BetaDistribution (%d, %d)\n', dist.a, dist.b);
+%             disp(str);
+%         end
+
     end
 end
