@@ -1,11 +1,11 @@
-classdef ChebyshevUPolynomials < PolynomialSystem
-    % CHEBYSHEVUPOLYNOMIALS Constructs a ChebyshevUPolynomials.
-    % SYS=CHEBYSHEVUPOLYNOMIALS(DEG) constructs polynomial system returned
-    % in SYS, representing a 2nd kind Chebyshev polynomial of order DEG.
-    % Example (<a href="matlab:run_example ChebyshevUPolynomials">run</a>)
-    % sys=ChebyshevUPolynomials(4);
+classdef Monomials < PolynomialSystem
+    % MONOMIALS Construct a Monomial system.
+    % SYS=MONOMIALS(DEG) constructs polynomial system returned in
+    % SYS, representing a monomial of order DEG.
     %
-    % See also LEGENDREPOLYNOMIALS LAGUERREPOLYNOMIALS
+    % Example (<a href="matlab:run_example Monomials">run</a>)
+    %
+    % See also HERMITEPOLYNOMIALS POLYNOMIALSYSTEM
     
     %   Aidin Nojavan
     %   Copyright 2014, Inst. of Scientific Computing, TU Braunschweig
@@ -17,24 +17,22 @@ classdef ChebyshevUPolynomials < PolynomialSystem
     %   See the GNU General Public License for more details. You should have
     %   received a copy of the GNU General Public License along with this
     %   program.  If not, see <http://www.gnu.org/licenses/>.
+    
     properties
-        % CHEBYSHEVUPOLYNOMIALS Construct a ChebyshevUPolynomials.
-        % SYS=CHEBYSHEVUPOLYNOMIALS(DEG) constructs polynomial system
-        % returned in SYS, representing a 2nd kind Chebyshev
-        % polynomial of order DEG.
+        % The parameter DEG of the Monomials(DEG) system. DEG is
+        % the order of the monomial system.
         deg
     end
     
     methods
-        function poly=ChebyshevUPolynomials(deg)
-            % CHEBYSHEVUPOLYNOMIALS Construct a ChebyshevUPolynomials.
-            % SYS=CHEBYSHEVUPOLYNOMIALS(DEG) constructs polynomial system
-            % returned in SYS, representing a 2nd kind Chebyshev
-            % polynomial of order DEG.
-            poly.deg=deg;
+        function sys=Monomials(deg)
+            % MONOMIALS Construct a Monomials.
+            % SYS=MONOMIALS(DEG) constructs monomial system
+            % returned in SYS, representing a monomial system of order DEG.
+            sys.deg=deg;
         end
-        function r=recur_coeff(poly)
-            % RECUR_COEFF Compute recurrence coefficient of orthogonal polynomials.
+        function r=recur_coeff(sys)
+            % RECUR_COEFF Compute recurrence coefficient of polynomials
             % R = RECUR_COEFF(SYS) computes the recurrence coefficients for
             % the system of orthogonal polynomials SYS. The signs are compatible with
             % the ones given in Abramowith & Stegun 22.7:
@@ -48,10 +46,11 @@ classdef ChebyshevUPolynomials < PolynomialSystem
             % Furthermore the coefficients start here for p_1, so that only p_-1=0
             % and p_0=1 need to be fixed (otherwise p_1, would need to be another
             % parameter, since it's not always equal to x).
-            n = (0:poly.deg-1)';
+            n = (0:sys.deg-1)';
             one = ones(size(n));
             zero = zeros(size(n));
-            r = [zero, 2*one, one];
+            r = [zero, one, zero];
         end
     end
 end
+

@@ -15,18 +15,24 @@ classdef PolynomialSystem < FunctionSystem
     %   received a copy of the GNU General Public License along with this
     %   program.  If not, see <http://www.gnu.org/licenses/>.
     methods (Abstract)
-        r=recur_coeff(sys) % RECUR_COEFF compute recursion coefficients of 
-                           % the basis function
+        r=recur_coeff(sys)
+        % RECUR_COEFF Compute recurrence coefficient of polynomials of the
+        % basis function
+        % R = RECUR_COEFF(SYS) computes the recurrence coefficients for
+        % the system of orthogonal polynomials SYS. 
+        % References:
+        %   [1] Abramowitz & Stegun: Handbook of Mathematical Functions
+        %   [2] http://dlmf.nist.gov/18.9
     end
     methods
         function y_alpha_j=evaluate(sys,xi)
             % EVALUATE Evaluates the basis functions at given points.
-            %   Y_ALPHA_J = EVALUATE(SYS, XI) evaluates the basis function 
-            %   specified by SYS at the points specified by XI. If there 
-            %   are M basis functions and XI is 1 x N matrix, where N is
-            %   the number of evaulation points, then the returned matrix Y 
-            %   is of size N x M such that Y(j,I) is the I-th basis function
-            %   evaluated at point XI(J).
+            % Y_ALPHA_J = EVALUATE(SYS, XI) evaluates the basis function
+            % specified by SYS at the points specified by XI. If there
+            % are M basis functions and XI is 1 x N matrix, where N is
+            % the number of evaulation points, then the returned matrix Y
+            % is of size N x M such that Y(j,I) is the I-th basis function
+            % evaluated at point XI(J).
             k = size(xi, 2);
             n = (0:sys.deg-1)';
             p = zeros(k,sys.deg);

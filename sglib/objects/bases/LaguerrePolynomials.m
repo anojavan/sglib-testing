@@ -44,12 +44,7 @@ classdef LaguerrePolynomials < PolynomialSystem
             %
             % Furthermore the coefficients start here for p_1, so that only p_-1=0
             % and p_0=1 need to be fixed (otherwise p_1, would need to be another
-            % parameter, since it's not always equal to x). Therefore there needs to
-            % be a little extra treatment for the coefficient of the Chebyshev
-            % polynomials of the first kind, esp. T_1).
-            % References:
-            %   [1] Abramowitz & Stegun: Handbook of Mathematical Functions
-            %   [2] http://dlmf.nist.gov/18.9
+            % parameter, since it's not always equal to x).
             n = (0:sys.deg-1)';
             r = [(2*n + 1) ./ (n+1),  -1 ./ (n+1), n ./ (n+1)];
         end

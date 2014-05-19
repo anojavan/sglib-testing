@@ -48,9 +48,6 @@ classdef ChebyshevTPolynomials < PolynomialSystem
             %   parameter, since it's not always equal to x). Therefore there needs to
             %   be a little extra treatment for the coefficient of the Chebyshev
             %   polynomials of the first kind, esp. T_1).
-            % References:
-            %   [1] Abramowitz & Stegun: Handbook of Mathematical Functions
-            %   [2] http://dlmf.nist.gov/18.9
             n = (0:sys.deg-1)';
             one = ones(size(n));
             zero = zeros(size(n));
