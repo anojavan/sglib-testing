@@ -1,9 +1,9 @@
 classdef ChebyshevUPolynomials < PolynomialSystem
     % CHEBYSHEVUPOLYNOMIALS Constructs a ChebyshevUPolynomials.
-    % SYS=CHEBYSHEVUPOLYNOMIALS(DEG) constructs polynomial system returned
-    % in SYS, representing a 2nd kind Chebyshev polynomial of order DEG.
+    % SYS=CHEBYSHEVUPOLYNOMIALS() constructs polynomial system returned
+    % in SYS, representing a 2nd kind Chebyshev polynomial.
     % Example (<a href="matlab:run_example ChebyshevUPolynomials">run</a>)
-    % sys=ChebyshevUPolynomials(4);
+    % sys=ChebyshevUPolynomials();
     %
     % See also LEGENDREPOLYNOMIALS LAGUERREPOLYNOMIALS
     
@@ -17,27 +17,17 @@ classdef ChebyshevUPolynomials < PolynomialSystem
     %   See the GNU General Public License for more details. You should have
     %   received a copy of the GNU General Public License along with this
     %   program.  If not, see <http://www.gnu.org/licenses/>.
-    properties
-        % CHEBYSHEVUPOLYNOMIALS Construct a ChebyshevUPolynomials.
-        % SYS=CHEBYSHEVUPOLYNOMIALS(DEG) constructs polynomial system
-        % returned in SYS, representing a 2nd kind Chebyshev
-        % polynomial of order DEG.
-        deg
-    end
-    
     methods
-        function poly=ChebyshevUPolynomials(deg)
+        function sys=ChebyshevUPolynomials()
             % CHEBYSHEVUPOLYNOMIALS Construct a ChebyshevUPolynomials.
-            % SYS=CHEBYSHEVUPOLYNOMIALS(DEG) constructs polynomial system
-            % returned in SYS, representing a 2nd kind Chebyshev
-            % polynomial of order DEG.
-            poly.deg=deg;
+            % SYS=CHEBYSHEVUPOLYNOMIALS() constructs polynomial system
+            % returned in SYS, representing a 2nd kind Chebyshev polynomial.
         end
-        function r=recur_coeff(poly)
+        function r=recur_coeff(sys,p)
             % RECUR_COEFF Compute recurrence coefficient of orthogonal polynomials.
-            % R = RECUR_COEFF(SYS) computes the recurrence coefficients for
-            % the system of orthogonal polynomials SYS. The signs are compatible with
-            % the ones given in Abramowith & Stegun 22.7:
+            % R = RECUR_COEFF(SYS,P) computes the recurrence coefficients for
+            % the system of orthogonal polynomials SYS of order P. The 
+            % signs are compatible with the ones given in Abramowith & Stegun 22.7:
             %
             %       p_n+1  = (a_n + x b_n) p_n - c_n p_n-1
             %
@@ -48,7 +38,7 @@ classdef ChebyshevUPolynomials < PolynomialSystem
             % Furthermore the coefficients start here for p_1, so that only p_-1=0
             % and p_0=1 need to be fixed (otherwise p_1, would need to be another
             % parameter, since it's not always equal to x).
-            n = (0:poly.deg-1)';
+            n = (0:p-1)';
             one = ones(size(n));
             zero = zeros(size(n));
             r = [zero, 2*one, one];

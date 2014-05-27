@@ -15,17 +15,17 @@ classdef PolynomialSystem < FunctionSystem
     %   received a copy of the GNU General Public License along with this
     %   program.  If not, see <http://www.gnu.org/licenses/>.
     methods (Abstract)
-        r=recur_coeff(sys)
+        r=recur_coeff(sys,p)
         % RECUR_COEFF Compute recurrence coefficient of polynomials of the
         % basis function
-        % R = RECUR_COEFF(SYS) computes the recurrence coefficients for
-        % the system of orthogonal polynomials SYS. 
+        % R = RECUR_COEFF(SYS,P) computes the recurrence coefficients for
+        % the system of orthogonal polynomials SYS of order P. 
         % References:
         %   [1] Abramowitz & Stegun: Handbook of Mathematical Functions
         %   [2] http://dlmf.nist.gov/18.9
     end
     methods
-        function y_alpha_j=evaluate(sys,xi)
+        function y_alpha_j=evaluate(sys,p,xi)
             % EVALUATE Evaluates the basis functions at given points.
             % Y_ALPHA_J = EVALUATE(SYS, XI) evaluates the basis function
             % specified by SYS at the points specified by XI. If there
@@ -34,17 +34,15 @@ classdef PolynomialSystem < FunctionSystem
             % is of size N x M such that Y(j,I) is the I-th basis function
             % evaluated at point XI(J).
             k = size(xi, 2);
-            n = (0:sys.deg-1)';
-            p = zeros(k,sys.deg);
-            p(:,1) = 0;
-            p(:,2) = 1;
-            r = recur_coeff(sys);
-            for d=1:sys.deg-1
-                p(:,d+2) = (r(d,1) + xi' * r(d, 2)) .* p(:,d+1) - r(d,3) * p(:,d);
+            n = (0:p-1)';
+            y_alpha = zeros(k,p);
+            y_alpha(:,1) = 0;
+            y_alpha(:,2) = 1;
+            r = recur_coeff(sys,p);
+            for d=1:p-1
+                y_alpha(:,d+2) = (r(d,1) + xi' * r(d, 2)) .* y_alpha(:,d+1) - r(d,3) * y_alpha(:,d);
             end
-            
-            y_alpha_j = ones(k,sys.deg);
-            y_alpha_j = y_alpha_j .* p(:, n(:,1)+2);
+            y_alpha_j = y_alpha(:, n(:,1)+2);
         end
         
     end

@@ -16,7 +16,7 @@ classdef FunctionSystem
     %   program.  If not, see <http://www.gnu.org/licenses/>.
     
     methods (Abstract)
-        y=evaluate(sys,xi); %EVALUATE Evaluates the basis functions at given points.
+        y=evaluate(sys,p,xi); %EVALUATE Evaluates the basis functions at given points.
     end 
 end
 

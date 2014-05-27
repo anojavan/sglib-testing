@@ -1,9 +1,9 @@
 classdef HermitePolynomials < PolynomialSystem
     % HERMITEPOLYNOMIALS Construct a HermitePolynomials.
-    % SYS=HERMITEPOLYNOMIALS(DEG) constructs polynomial system returned in
-    % SYS, representing an orthogonal Hermite polynomial of order DEG.
+    % SYS=HERMITEPOLYNOMIALS() constructs polynomial system returned in
+    % SYS, representing an orthogonal Hermite polynomial.
     % Example (<a href="matlab:run_example HermitePolynomials">run</a>)
-    % sys=HermitePolynomials(3);
+    % sys=HermitePolynomials();
     %
     % See also LEGENDREPOLYNOMIALS POLYNOMIALSYSTEM 
     
@@ -17,26 +17,18 @@ classdef HermitePolynomials < PolynomialSystem
     %   See the GNU General Public License for more details. You should have
     %   received a copy of the GNU General Public License along with this
     %   program.  If not, see <http://www.gnu.org/licenses/>.
-    
-    properties
-        % The parameter DEG of the HermitePolynomials(DEG) system. DEG is
-        % the order of the orthogonal Hermite polynomial system.
-        deg
-    end
-    
+
     methods
-        function sys=HermitePolynomials(deg)
+        function sys=HermitePolynomials()
             % HERMITEPOLYNOMIALS Construct a HermitePolynomials.
-            % SYS=HERMITEPOLYNOMIALS(DEG) constructs polynomial system
-            % returned in SYS, representing an orthogonal Hermite
-            % polynomial of order DEG.
-            sys.deg=deg;
+            % SYS=HERMITEPOLYNOMIALS() constructs polynomial system
+            % returned in SYS, representing an orthogonal Hermite polynomial.
         end
-        function r=recur_coeff(sys)
+        function r=recur_coeff(sys,p)
             % RECUR_COEFF Compute recurrence coefficient of orthogonal polynomials.
-            % R = RECUR_COEFF(SYS) computes the recurrence coefficients for
-            % the system of orthogonal polynomials SYS. The signs are compatible with
-            % the ones given in Abramowith & Stegun 22.7:
+            % R = RECUR_COEFF(SYS,P) computes the recurrence coefficients for
+            % the system of orthogonal polynomials SYS of order P. The 
+            % signs are compatible with the ones given in Abramowith & Stegun 22.7:
             %
             %       p_n+1  = (a_n + x b_n) p_n - c_n p_n-1
             %
@@ -47,7 +39,7 @@ classdef HermitePolynomials < PolynomialSystem
             % Furthermore the coefficients start here for p_1, so that only p_-1=0
             % and p_0=1 need to be fixed (otherwise p_1, would need to be another
             % parameter, since it's not always equal to x).
-            n = (0:sys.deg-1)';
+            n = (0:p-1)';
             one = ones(size(n));
             zero = zeros(size(n));
             r = [zero, one, n];

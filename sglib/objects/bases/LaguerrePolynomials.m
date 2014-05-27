@@ -1,9 +1,9 @@
 classdef LaguerrePolynomials < PolynomialSystem
     % LAGUERREPOLYNOMIALS Construct a LaguerrePolynomials.
-    % SYS=LAGUERREPOLYNOMIALS(DEG) constructs polynomial system returned in
-    % SYS, representing an orthogonal Laguerre polynomial of order DEG.
+    % SYS=LAGUERREPOLYNOMIALS() constructs polynomial system returned in
+    % SYS, representing an orthogonal Laguerre polynomial.
     % Example (<a href="matlab:run_example LaguerrePolynomials">run</a>)
-    % sys=LaguerrePolynomials(3);
+    % sys=LaguerrePolynomials();
     % See also HERMITEPOLYNOMIALS POLYNOMIALSYSTEM
     
     %   Aidin Nojavan
@@ -16,25 +16,17 @@ classdef LaguerrePolynomials < PolynomialSystem
     %   See the GNU General Public License for more details. You should have
     %   received a copy of the GNU General Public License along with this
     %   program.  If not, see <http://www.gnu.org/licenses/>.
-    properties
-        % The parameter DEG of the LaguerrePolynomials(DEG) system. DEG is
-        % the order of the orthogonal Laguerre polynomial system.
-        deg
-    end
-    
     methods
-        function sys=LaguerrePolynomials(deg)
+        function sys=LaguerrePolynomials()
             % LAGUERREPOLYNOMIALS Construct a LaguerrePolynomials.
-            % SYS=LAGUERREPOLYNOMIALS(DEG) constructs polynomial system 
-            % returned in SYS, representing an orthogonal Laguerre 
-            % polynomial of order DEG.
-            sys.deg=deg;
+            % SYS=LAGUERREPOLYNOMIALS() constructs polynomial system  
+            % in SYS, representing an orthogonal Laguerre polynomial.
         end
-        function r=recur_coeff(sys)
+        function r=recur_coeff(sys,p)
             % RECUR_COEFF Compute recurrence coefficient of orthogonal polynomials.
-            % R = RECUR_COEFF(SYS) computes the recurrence coefficients for
-            % the system of orthogonal polynomials SYS. The signs are compatible with
-            % the ones given in Abramowith & Stegun 22.7:
+            % R = RECUR_COEFF(SYS,P) computes the recurrence coefficients for
+            % the system of orthogonal polynomials SYS of order P. The 
+            % signs are compatible with the ones given in Abramowith & Stegun 22.7:
             %
             %       p_n+1  = (a_n + x b_n) p_n - c_n p_n-1
             %
@@ -45,7 +37,7 @@ classdef LaguerrePolynomials < PolynomialSystem
             % Furthermore the coefficients start here for p_1, so that only p_-1=0
             % and p_0=1 need to be fixed (otherwise p_1, would need to be another
             % parameter, since it's not always equal to x).
-            n = (0:sys.deg-1)';
+            n = (0:p-1)';
             r = [(2*n + 1) ./ (n+1),  -1 ./ (n+1), n ./ (n+1)];
         end
     end
