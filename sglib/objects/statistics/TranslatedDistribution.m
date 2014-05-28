@@ -82,13 +82,11 @@ classdef TranslatedDistribution < Distribution
         end
         function [mean,var,skew,kurt]=moments(tdist)
             % MOMENTS compute the moments of the translated distribution.
-%             <<<<<<< HEAD
-%             =======
-%             % TODO: check this functions if mean of underlying distribution
-%             % is not the same as the center. I guess we will have to add
-%             % something like (tdist.center + tdist.dist.mean())^2 to the
-%             % variance.
-%             >>>>>>> sglib-ezander/master
+            %             % TODO: check this functions if mean of underlying distribution
+            %             % is not the same as the center. I guess we will have to add
+            %             % something like (tdist.center + tdist.dist.mean())^2 to the
+            %             % variance.
+
             n=max(nargout,1);
             m=cell(1,n);
             [m{:}]=tdist.dist.moments();
@@ -104,10 +102,10 @@ classdef TranslatedDistribution < Distribution
             end
         end
         
-        function display(dist)
-            
-            str = fprintf('TranslatedDistribution (%s, %d, %d, %d)\n',class(dist.dist), dist.shift, dist.scale,dist.center);
-            dist.dist.display;
+        function str=disp(dist)
+            disp@Distribution(dist);
+            str = sprintf('TranslatedDistribution(%s,%d,%d,%d)\n',dist.dist.disp,dist.shift,dist.scale,dist.center);
+            disp(str);
         end
     end
 end

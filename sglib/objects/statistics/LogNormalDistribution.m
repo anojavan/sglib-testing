@@ -70,8 +70,10 @@ classdef LogNormalDistribution < Distribution
             [var,mean,skew,kurt]=lognormal_moments( dist.sigma,dist.sigma);
         end
         
-        function display(dist)
-            str = fprintf('LogNormalDistribution(%d, %d)\n', dist.mu, dist.sigma);
+        function str=disp(dist)
+            disp@Distribution(dist);
+            str = sprintf('LogNormalDistribution(%d,%d)\n', dist.mu,dist.sigma);
+            disp(str);
         end
     end
 end
