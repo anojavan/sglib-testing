@@ -90,7 +90,8 @@ classdef TranslatedDistribution < Distribution
             n=max(nargout,1);
             m=cell(1,n);
             [m{:}]=tdist.dist.moments();
-            mean=m{1}+tdist.shift;
+            diff=m{1}-tdist.center;
+            mean=(tdist.scale*diff)+tdist.center+tdist.shift;
             if nargout>=2
                 var=m{2}*tdist.scale^2;
             end
