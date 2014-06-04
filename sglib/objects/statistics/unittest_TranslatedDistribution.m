@@ -29,8 +29,22 @@ assert_equals( T.center, 0.4, 'Initialization center=mean' );
 T = TranslatedDistribution(B,4,5,1);
 assert_equals( T.center, 1, 'Initialization center' );
 %% Mean & Var
-assert_equals(T.mean, 4.4, 'mean');
-assert_equals(T.var, 1, 'var' );
+assert_equals(T.mean, 2, 'mean_with_center');
+assert_equals(T.var, 1, 'var_with_center' );
+
+U=UniformDistribution(2,6);
+T=TranslatedDistribution(U,0,2,3);
+assert_equals(T.mean, 5, 'mean_with_center');
+assert_equals(T.var,16/3, 'var_with_center' );
+
+T=TranslatedDistribution(U,2,2,3);
+assert_equals(T.mean, 7, 'mean_with_center');
+assert_equals(T.var,16/3, 'var_with_center' );
+
+
+T = TranslatedDistribution(B,4,5);
+assert_equals(T.mean, 4.4, 'mean_without_center');
+assert_equals(T.var, 1, 'var_without_center' );
 %% PDF
 B = BetaDistribution(3,3);
 T = TranslatedDistribution(B,0.25,2);
@@ -135,12 +149,4 @@ N = NormalDistribution(2,3);
 T = TranslatedDistribution(N,0,1,2);
 dist = fix_bounds(T,2,4,'q0',0.001,'q1', 0.5);
 assert_equals(invcdf(dist,0.001), 2, 'fix_bounds-nor_min');
-<<<<<<< HEAD
 assert_equals(invcdf(dist,0.5), 4, 'fix_bounds-nor_max');
-=======
-assert_equals(invcdf(dist,0.5), 4, 'fix_bounds-nor_max');
-
-%%
-% TODO: add unittest for variance of TranslatedDistribution if center is
-% not the same as mean
->>>>>>> sglib-ezander/master
