@@ -103,10 +103,10 @@ classdef TranslatedDistribution < Distribution
             end
         end
         
-        function str=disp(dist)
-            disp@Distribution(dist);
-            str = sprintf('TranslatedDistribution(%s,%d,%d,%d)\n',dist.dist.disp,dist.shift,dist.scale,dist.center);
-            disp(str);
+        function str=strtodisp(dist)
+            dist_str=dist.dist.strtodisp();
+            str = sprintf('TDist(%s,%d,%d,%d)',...
+                dist_str,dist.shift,dist.scale,dist.center);
         end
     end
 end

@@ -72,10 +72,8 @@ classdef NormalDistribution < Distribution
             % distribution DIST in regard to parameters SHIFT and SCALE
             new_dist=NormalDistribution(dist.mu+shift,dist.sigma*scale);
         end
-        function str=disp(dist)
-            disp@Distribution(dist);
-            str = sprintf('NormalDistribution(%d,%d)\n', dist.mu,dist.sigma);
-            disp(str);
+        function str=strtodisp(dist)
+            str = sprintf('NDist(%d,%d)', dist.mu,dist.sigma);
         end
     end
 end

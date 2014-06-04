@@ -30,17 +30,6 @@ classdef BetaDistribution < Distribution
         % variable and controls the shape of the distribution
         b
     end
-    methods (Access = protected)
-        function header = getHeader(obj)
-            if ~isscalar(obj)
-                header = getHeader@matlab.mixin.CustomDisplay(obj);
-            else
-                headerStr = matlab.mixin.CustomDisplay.getClassNameForHeader(obj);
-                headerStr = [headerStr,' with Customized Display'];
-                header = sprintf('%s\n',headerStr);
-            end
-        end
-    end
     
     methods
         function dist=BetaDistribution(a,b)
@@ -70,10 +59,8 @@ classdef BetaDistribution < Distribution
             % MOMENTS computes the moments of the beta distribution.
             [mean,var,skew,kurt]=beta_moments( dist.a, dist.b );
         end
-        function str=disp(dist)
-            disp@Distribution(dist);
-            str = sprintf('BetaDistribution(%d,%d)\n', dist.a,dist.b);
-            disp(str);         
+        function str=strtodisp(dist)
+            str = sprintf('BDist(%d,%d)', dist.a,dist.b);       
         end
     end
 end
