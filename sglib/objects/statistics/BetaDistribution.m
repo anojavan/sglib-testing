@@ -59,8 +59,10 @@ classdef BetaDistribution < Distribution
             % MOMENTS computes the moments of the beta distribution.
             [mean,var,skew,kurt]=beta_moments( dist.a, dist.b );
         end
-        function str=strtodisp(dist)
-            str = sprintf('BDist(%d,%d)', dist.a,dist.b);       
+        function str=to_string(dist)
+            % TO_STRING stores the basic information about the class in
+            % string STR to be displayed
+            str = sprintf('Beta(%d,%d)', dist.a,dist.b);
         end
     end
 end

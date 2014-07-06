@@ -73,8 +73,11 @@ classdef UniformDistribution < Distribution
             dist.a=m+shift-v;
             dist.b=m+shift+v;
         end
-        function str=strtodisp(dist)
-            str = sprintf('UDist(%d,%d)', dist.a,dist.b);
+        
+        function str=to_string(dist)
+            % TO_STRING stores the basic information about the class in
+            % string STR to be displayed
+            str = sprintf('U(%d,%d)', dist.a,dist.b);
         end
     end
 end

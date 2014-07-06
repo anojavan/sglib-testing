@@ -7,6 +7,7 @@ classdef Distribution % < handle
         y=cdf(dist, x); % CDF Compute the cumulative distribution function.
         x=invcdf(dist, y); % INVCDF Compute the inverse CDF function.
         y=moments(dist); % MOMENTS Compute the moments of the distribution.
+        str=to_string(dist); % Stores the display info of DIST in STR
     end
     methods
         function mean=mean(dist)
@@ -84,7 +85,7 @@ classdef Distribution % < handle
         end
         function str=disp(dist)
             builtin('disp',dist);
-            str=dist.strtodisp();
+            str=dist.to_string();
             disp(str);
         end
     end

@@ -54,8 +54,10 @@ classdef ExponentialDistribution < Distribution
             % MOMENTS computes the moments of the exponential distribution.
             [var,mean,skew,kurt]=exponential_moments( dist.lambda);
         end
-        function str=strtodisp(dist)
-            str = sprintf('ExDist(%d)', dist.lambda);
+        function str=to_string(dist)
+            % TO_STRING stores the basic information about the class in
+            % string STR to be displayed
+            str = sprintf('Exp(%d)', dist.lambda);
         end
     end
 end

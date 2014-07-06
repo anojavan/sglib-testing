@@ -81,17 +81,12 @@ classdef TranslatedDistribution < Distribution
             x=(x-tdist.center)*tdist.scale+tdist.center+tdist.shift;
         end
         function [mean,var,skew,kurt]=moments(tdist)
-            % MOMENTS compute the moments of the translated distribution.
-            %             % TODO: check this functions if mean of underlying distribution
-            %             % is not the same as the center. I guess we will have to add
-            %             % something like (tdist.center + tdist.dist.mean())^2 to the
-            %             % variance.
-
             n=max(nargout,1);
             m=cell(1,n);
             [m{:}]=tdist.dist.moments();
             diff=m{1}-tdist.center;
             mean=(tdist.scale*diff)+tdist.center+tdist.shift;
+            
             if nargout>=2
                 var=m{2}*tdist.scale^2;
             end
@@ -103,9 +98,14 @@ classdef TranslatedDistribution < Distribution
             end
         end
         
-        function str=strtodisp(dist)
-            dist_str=dist.dist.strtodisp();
-            str = sprintf('TDist(%s,%d,%d,%d)',...
+        function str=to_string(dist)
+            % TO_STRING stores the basic information about the class in
+            % string STR to be displayed
+            
+            % Reading the info of the original dist to be displayed
+            dist_str=dist.dist.to_string();
+            
+            str = sprintf('T(%s,%d,%d,%d)',...
                 dist_str,dist.shift,dist.scale,dist.center);
         end
     end

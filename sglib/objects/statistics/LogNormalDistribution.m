@@ -69,11 +69,11 @@ classdef LogNormalDistribution < Distribution
             % MOMENTS computes the moments of the LogNormal distribution.
             [var,mean,skew,kurt]=lognormal_moments( dist.sigma,dist.sigma);
         end
-        
-        function str=disp(dist)
-            disp@Distribution(dist);
-            str = sprintf('LogNormalDistribution(%d,%d)\n', dist.mu,dist.sigma);
-            disp(str);
+        function str=to_string(dist)
+            % TO_STRING stores the basic information about the class in
+            % string STR to be displayed
+            str = sprintf('LogN(%d,%d)', dist.mu,dist.sigma);
         end
     end
 end
+
