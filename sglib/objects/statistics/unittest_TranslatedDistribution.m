@@ -21,7 +21,8 @@ munit_set_function( 'TranslatedDistribution' );
 %% Initialization
 B = BetaDistribution(2,3);
 T = TranslatedDistribution(B,4,5);
-assert_equals( T.dist, B, 'Initialization dist' );
+assert_equals( T.dist.a, 2, 'Initialization dist a' );
+assert_equals( T.dist.b, 3, 'Initialization dist b' );
 assert_equals( T.shift, 4, 'Initialization shift' );
 assert_equals( T.scale, 5, 'Initialization scale' );
 assert_equals( T.center, 0.4, 'Initialization center=mean' );
